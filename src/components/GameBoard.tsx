@@ -26,32 +26,7 @@ function GameBoard() {
     useEffect(() => {
         getGameDetails()
 
-        // if(getGameDetailsResponse && getGameDetailsResponse.gameHistory && getGameDetailsResponse.gameHistory.playedOptions){
-        //     for(let x in getGameDetailsResponse.gameHistory.playedOptions){
-        //         console.log("1st -> ")
-        //         console.log(x)
-        //     }
-        // }
-
-        // if(getGameDetailsResponse && getGameDetailsResponse.gameHistory && getGameDetailsResponse.gameHistory.playedOptions){
-        //     for(let x in getGameDetailsResponse.gameHistory.playedOptions){
-        //         console.log("1st -> ")
-        //         console.log(x)
-        //     }
-        // }
-
-        // if(getGameDetailsResponse  && getGameDetailsResponse.gameHistory){
-
-        //     console.log("2nd===_>")
-        //     setOptions([getGameDetailsResponse.gameHistory.playedOptions.silver,getGameDetailsResponse.gameHistory.playedOptions.gold,getGameDetailsResponse.gameHistory.playedOptions.diamond])
-        // }
-
     },[])
-
-    // if(getGameDetailsResponse  && getGameDetailsResponse.gameHistory && getGameDetailsResponse.gameHistory.playedOptions){
-    //     console.log("2nd===_>")
-    //     setOptions([getGameDetailsResponse.gameHistory.playedOptions.silver,getGameDetailsResponse.gameHistory.playedOptions.gold,getGameDetailsResponse.gameHistory.playedOptions.diamond])
-    // }
 
 
     useEffect(() => {
@@ -169,8 +144,7 @@ function GameBoard() {
 
     if (getGameDetailsError==null) {
         return <Loading />;
-    } 
-    
+    }
 
     return (
 

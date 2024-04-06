@@ -70,7 +70,7 @@ export function usePlayGame() {
     const [playGameResponse, setPlayGameResponse] = useState({} as PlayGameResponse);
     const [errorOccurred, setErrorOccurred] = useState<boolean | null>(null);
 
-    const url = BASE_URL+"/playGame";
+    const url = BASE_URL+"playGame";
     const request_config: AxiosRequestConfig = {
         headers: {
             Accept: 'application/json',
