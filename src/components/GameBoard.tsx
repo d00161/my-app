@@ -3,6 +3,7 @@ import { useGetUserDetails } from "../hooks/GetUserDetails";
 import { useGetGameDetails } from "../hooks/GetGameDetails";
 import Loading from "./Loading";
 import { PlayedOptions, usePlayGame } from "../hooks/PlayGame";
+import Recharge from "./Recharge";
 
 
 
@@ -112,7 +113,7 @@ function GameBoard() {
     
     
 
-    let totalSilverAmount, totalGoldAmount, totalDiamondAmount, totalAmount;
+    let totalSilverAmount, totalGoldAmount, totalDiamondAmount, totalAmount, userdetails;
     if(getGameDetailsResponse!=null && getGameDetailsResponse.game!=null){
 
         totalSilverAmount = (options[0].reduce((accumulator, currentValue) => accumulator + currentValue, 0))*getGameDetailsResponse.game.ticketAmount.silver;
@@ -122,6 +123,12 @@ function GameBoard() {
         totalDiamondAmount = (options[2].reduce((accumulator, currentValue) => accumulator + currentValue, 0))*getGameDetailsResponse.game.ticketAmount.diamond;
 
         totalAmount = totalSilverAmount + totalGoldAmount + totalDiamondAmount;
+
+        userdetails = {
+            username: getGameDetailsResponse.userDetails.username,
+            balance: getGameDetailsResponse.userDetails.balance,
+            mobile: getGameDetailsResponse.userDetails.mobile
+        }
     }
 
     const handlePlayGame = () => {
@@ -140,6 +147,17 @@ function GameBoard() {
     }
 
 
+    const [isRechargePopUpOpen, setIsRecharPopUpOpen] = useState(false);
+
+    const handleRecharge = () => {
+
+        setIsRecharPopUpOpen(true)
+    }
+
+
+    if(isRechargePopUpOpen){
+        return <Recharge setIsRecharPopUpOpen={setIsRecharPopUpOpen} />;
+    }
     
 
     if (getGameDetailsError==null) {
@@ -177,6 +195,35 @@ function GameBoard() {
                     totalAmount : {totalAmount}
                 </div>
                 <button onClick={handlePlayGame}>play game</button>
+            </div>
+            <div className="userDetails" style={{border: "solid 1px", margin: "10px", padding: "10px" }}>
+                <div style={{display: "flex"}}>
+                    <div>
+                        username: 
+                    </div>
+                    <div>
+                        {userdetails && userdetails.username}
+                    </div>
+                </div>
+                <div style={{display: "flex"}}>
+                    <div>
+                        mobile: 
+                    </div>
+                    <div>
+                        {userdetails && userdetails.mobile}
+                    </div>
+                </div>
+                <div style={{display: "flex"}}>
+                    <div>
+                        balance: 
+                    </div>
+                    <div>
+                        {userdetails && userdetails.balance}
+                    </div>
+                </div>
+                <div>
+                    <button onClick={handleRecharge}>Recharge</button>
+                </div>
             </div>
     </div>
 

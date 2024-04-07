@@ -15,6 +15,7 @@ export interface GameDetailsResponse {
 
 
 export interface Game{
+    _id: string,
     gameId: string,
     startTime: string,
     endTime: string,

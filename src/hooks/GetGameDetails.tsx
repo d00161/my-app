@@ -1,13 +1,15 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { useState } from "react";
 import { BASE_URL } from "../Constants";
+import { User } from "./PlayGame";
 
 
 export interface GameDetailsResponse {
 
 
     game: Game,
-    gameHistory: GameHistory
+    gameHistory: GameHistory,
+    userDetails: User
 }
 
 
