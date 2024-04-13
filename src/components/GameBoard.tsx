@@ -124,6 +124,10 @@ function GameBoard() {
 
         totalAmount = totalSilverAmount + totalGoldAmount + totalDiamondAmount;
 
+        
+    }
+
+    if(getGameDetailsResponse && getGameDetailsResponse.userDetails && getGameDetailsResponse.userDetails.username){
         userdetails = {
             username: getGameDetailsResponse.userDetails.username,
             balance: getGameDetailsResponse.userDetails.balance,
@@ -164,11 +168,8 @@ function GameBoard() {
         return <Loading />;
     }
 
-    return (
-
-        
+    let gameBoardDetails =getGameDetailsResponse && getGameDetailsResponse.game && 
         <div>
-            
             <div style={{ display: 'flex'}}>
                 <div style={{margin: "20px"}}>
                     {silverBoard}
@@ -188,7 +189,6 @@ function GameBoard() {
                         totalAmount : {totalDiamondAmount}
                     </div>
                 </div>
-
             </div>
             <div>
                 <div>
@@ -196,38 +196,46 @@ function GameBoard() {
                 </div>
                 <button onClick={handlePlayGame}>play game</button>
             </div>
-            <div className="userDetails" style={{border: "solid 1px", margin: "10px", padding: "10px" }}>
-                <div style={{display: "flex"}}>
-                    <div>
-                        username: 
-                    </div>
-                    <div>
-                        {userdetails && userdetails.username}
-                    </div>
-                </div>
-                <div style={{display: "flex"}}>
-                    <div>
-                        mobile: 
-                    </div>
-                    <div>
-                        {userdetails && userdetails.mobile}
-                    </div>
-                </div>
-                <div style={{display: "flex"}}>
-                    <div>
-                        balance: 
-                    </div>
-                    <div>
-                        {userdetails && userdetails.balance}
-                    </div>
+        </div>
+
+        
+    let userDetails = userdetails &&
+        <div className="userDetails" style={{border: "solid 1px", margin: "10px", padding: "10px" }}>
+            <div style={{display: "flex"}}>
+                <div>
+                    username: 
                 </div>
                 <div>
-                    <button onClick={handleRecharge}>Recharge</button>
+                    { userdetails.username}
                 </div>
             </div>
-    </div>
+            <div style={{display: "flex"}}>
+                <div>
+                    mobile: 
+                </div>
+                <div>
+                    { userdetails.mobile}
+                </div>
+            </div>
+            <div style={{display: "flex"}}>
+                <div>
+                    balance: 
+                </div>
+                <div>
+                    { userdetails.balance}
+                </div>
+            </div>
+            <div>
+                <button onClick={handleRecharge}>Recharge</button>
+            </div>
+        </div>
+        
 
-    
+    return (
+        <div>
+            {userDetails}   
+            {gameBoardDetails}
+        </div>
     );
   }
   

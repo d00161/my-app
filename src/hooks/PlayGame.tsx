@@ -20,7 +20,7 @@ export interface Game{
     startTime: string,
     endTime: string,
     status: string,
-    result: [number]
+    result: number[]
     ticketAmount: {
         silver: number,
         gold: number,

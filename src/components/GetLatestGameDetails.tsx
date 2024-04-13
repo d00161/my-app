@@ -5,6 +5,7 @@ import Loading from "./Loading";
 import { Game, PlayedOptions, usePlayGame } from "../hooks/PlayGame";
 import Recharge from "./Recharge";
 import { useGetLatestGames } from "../hooks/GetLatestGames";
+import { useChangeGameStatus } from "../hooks/ChangeGameStatus";
 
 
 
@@ -13,7 +14,6 @@ import { useGetLatestGames } from "../hooks/GetLatestGames";
 
 function GetLatestGameDetails() {
 
-    const [isLoading, setIsLoading] = useState(true);
     const [games, setGames] = useState<Game[]>()
 
 
@@ -22,11 +22,28 @@ function GetLatestGameDetails() {
         getLatestGamesResponse,
         getLatestGamesError
     } = useGetLatestGames();
+
+    let {
+        changeGameStatusResponse,
+        changeGameStatus,
+        changeGameStatusError
+    } = useChangeGameStatus();
     
 
     useEffect(() => {
         getLatestGames()
     },[])
+
+    useEffect(()=>{
+        if(changeGameStatusError===false && changeGameStatusResponse  && changeGameStatusResponse.games){
+            console.log("changeGameStatusResponse===")
+            console.log(changeGameStatusResponse)
+            console.log("changeGameStatusResponse===")
+            setGames(changeGameStatusResponse.games)
+        }else if(changeGameStatusResponse.errorMessage){
+            alert(changeGameStatusResponse.errorMessage);
+        }
+    });
 
 
     useEffect(() => {
@@ -44,23 +61,25 @@ function GetLatestGameDetails() {
     }, [getLatestGamesResponse, getLatestGamesError]);
 
 
-
-
-    const handleCloseGame = (index: number) =>{
-        
-
+    const handleCloseGame = (gameId: string) =>{
+        changeGameStatus({
+            gameId: gameId,
+            status: "CLOSED"
+        })
     }
 
-    const handleStopGame = (index: number) => {
-
-
+    const handleStopGame = (gameId: string) => {
+        changeGameStatus({
+            gameId: gameId,
+            status: "STOPPED"
+        })
     }
 
 
     
     let gameElements = games?.map((game:Game, index: number) => {
         // console.log(game)
-        return <div style={{border: "solid 1px", padding: "5px", margin:"5px"}}>
+        return <div style={{border: "solid 1px", padding: "5px", margin:"5px"}} key={index}>
             <div style={{display:"flex"}}>
                 <div>
                     gameId: 
@@ -134,15 +153,33 @@ function GetLatestGameDetails() {
                     Result:
                 </div>
 
-                {game.result && (<div>
+                {game.result && game.result.length>=2 && (<div>
                     <div style={{display:"flex"}}>
 
-                        {/* <div>
-                            silver
+                        <div>
+                            silver: 
                         </div>
                         <div>
-                            {game.result}
-                        </div> */}
+                            {game.result[0]}
+                        </div>
+                    </div>
+                    <div style={{display:"flex"}}>
+
+                        <div>
+                            gold: 
+                        </div>
+                        <div>
+                            {game.result[1]}
+                        </div>
+                    </div>
+                    <div style={{display:"flex"}}>
+
+                        <div>
+                            diamond: 
+                        </div>
+                        <div>
+                            {game.result[2]}
+                        </div>
                     </div>
                 </div>)}
 
@@ -150,14 +187,14 @@ function GetLatestGameDetails() {
             <div>
                 {game.status==="ACTIVE" && (
                     <div>
-                        <button onClick={()=>handleCloseGame(index)}>stop game</button>
+                        <button onClick={()=>handleStopGame(game._id)}>stop game</button>
                     </div>
                 )}
             </div>
             <div>
                 {(game.status==="STOPPED" || game.status==="ACTIVE")  && (
                     <div>
-                        <button onClick={()=>handleCloseGame(index)}>close game</button>
+                        <button onClick={()=>handleCloseGame(game._id)}>close game</button>
                     </div>
                 )}
             </div>

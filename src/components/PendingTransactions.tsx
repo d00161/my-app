@@ -54,7 +54,7 @@ function PendingTransactions() {
 
     let rechargeTransactionsElement = rechargeTransactions.map((item:RechargeTransaction, index:number)=>{
 
-        return <div key={index} >
+        return <div key={"a"+index} >
 
             <table>
                 <tbody>
