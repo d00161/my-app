@@ -18,7 +18,7 @@ function App() {
         <Route path="/pendingTransactions" element={<PendingTransactions/>}/>
         <Route path="/latestGameDetails" element={<GetLatestGameDetails/>}/>
         <Route path='/admin' element={<AdminPage/>}/>
-        <Route path="*" element={"<NotFound />"} />
+        <Route path="*" element={"<NoPageFound />"} />
 
       </Routes>
       
