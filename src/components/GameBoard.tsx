@@ -1,8 +1,7 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { useGetUserDetails } from "../hooks/GetUserDetails";
+import { useEffect, useState } from "react";
 import { useGetGameDetails } from "../hooks/GetGameDetails";
 import Loading from "./Loading";
-import { PlayedOptions, usePlayGame } from "../hooks/PlayGame";
+import {  usePlayGame } from "../hooks/PlayGame";
 import Recharge from "./Recharge";
 
 
@@ -12,9 +11,7 @@ import Recharge from "./Recharge";
 
 function GameBoard() {
 
-    const [isLoading, setIsLoading] = useState(true);
     const [options, setOptions] = useState<number[][]>([Array(10).fill(0), Array(10).fill(0), Array(10).fill(0)]);
-
 
     let {
         getGameDetails,
