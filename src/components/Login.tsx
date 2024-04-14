@@ -15,7 +15,7 @@ function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const handleUsernameChange = (e: ChangeEvent<HTMLInputElement>) => {
         setUsername(e.target.value);
@@ -49,7 +49,7 @@ function Login() {
     useEffect(() => {
         if(errorOccurred === false){
             localStorage.setItem("accessToken", loginUserResponse.token);
-            navigate('/');
+            // navigate('/');
         }
     });
 

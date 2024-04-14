@@ -22,9 +22,7 @@ function App() {
       <button onClick={()=>setx(0)}>HomePage</button>
       <button onClick={()=>setx(1)}>Login</button>
       <button onClick={()=>setx(2)}>Register</button>
-      <button onClick={()=>setx(3)}>PendingTransactions</button>
-      <button onClick={()=>setx(4)}>GetLatestGameDetails</button>
-      <button onClick={()=>setx(5)}>AdminPage</button>
+      <button onClick={()=>setx(3)}>AdminPage</button>
     </div>
     <HashRouter>
       <Routes>
@@ -37,14 +35,15 @@ function App() {
         {x===2 &&
         <Route path="/" Component={Register}/>}
         ||
+        {x==3 &&
+        <Route path='/' Component={AdminPage}/>}
+        {/* ||
         {x===3 && 
         <Route path="/" Component={PendingTransactions}/>}
         ||
         {x===4 && 
-        <Route path="/" Component={GetLatestGameDetails}/>}
-        ||
-        {x==5 &&
-        <Route path='/' Component={AdminPage}/>}
+        <Route path="/" Component={GetLatestGameDetails}/>} */}
+        
         {/* <Route path="*" element={"<NoPageFound />"} /> */}
 
       </Routes>
