@@ -10,6 +10,12 @@ import GetLatestGameDetails from './components/GetLatestGameDetails';
 
 function App() {
   return (
+    <div>
+
+    <div>
+      "hello this is a testing website"
+    </div>
+    
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage/>}/>
@@ -23,6 +29,7 @@ function App() {
       </Routes>
       
     </BrowserRouter>
+    </div>
   );
 }
 
