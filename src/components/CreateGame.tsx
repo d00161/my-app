@@ -48,6 +48,8 @@ function CreateGame() {
         if(createGameError===false){
 
             console.log(createGameResponse)
+        }else if(createGameResponse && createGameResponse.errorMessage){
+            alert(createGameResponse.errorMessage);
         }
     })
     
@@ -88,7 +90,7 @@ function CreateGame() {
                         type="text"
                         id="startTime"
                         value={startTime}
-                        onChange={handleCreateGame}
+                        onChange={handleStartTimeChange}
                         required
                     />
                 </div>
@@ -98,7 +100,7 @@ function CreateGame() {
                         type="text"
                         id="endTime"
                         value={endTime}
-                        onChange={handleCreateGame}
+                        onChange={handleEndTimeChange}
                         required
                     />
                 </div>

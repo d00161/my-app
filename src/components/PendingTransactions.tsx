@@ -40,6 +40,8 @@ function PendingTransactions() {
             setRechargeTransactions(transactions)
             console.log(transactions)
 
+        } else if(approveTransactionResponse?.errorMessage){
+            alert(approveTransactionResponse.errorMessage);
         }
 
         // if(pendintTransactionsError===false){

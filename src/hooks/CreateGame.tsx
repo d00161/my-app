@@ -62,7 +62,8 @@ export interface CreateGameResponse {
     },
     _id: string,
     status: string,
-    result: number[]
+    result: number[],
+    errorMessage: string
 }
 
 
@@ -89,7 +90,7 @@ export function useCreateGame() {
             setCreateGameError(false);
         
         }).catch(error=> {
-            console.log(error);
+            alert(error);
             setCreateGameError(true);
         })
     }

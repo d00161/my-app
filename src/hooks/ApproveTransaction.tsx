@@ -8,7 +8,8 @@ export interface RechargeTransaction{
     userId: string,
     transactionId: string,
     status: string,
-    amount: string
+    amount: string,
+    errorMessage: string
 }
 
 export interface ApproveTransactionRequest{
@@ -34,6 +35,7 @@ export function useApproveTransaction() {
             setApproveTransactionResponse(response?.data);
             setApproveTransactionError(false);
         }).catch(error=> {
+            alert(error);
             setApproveTransactionError(true);
         })
     }
