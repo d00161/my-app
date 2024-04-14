@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useGetGameDetails } from "../hooks/GetGameDetails";
 import Loading from "./Loading";
-import {  usePlayGame } from "../hooks/PlayGame";
+import {  User, usePlayGame } from "../hooks/PlayGame";
 import Recharge from "./Recharge";
 
 
@@ -42,7 +42,7 @@ function GameBoard() {
     let {
         playGame,
         playGameResponse,
-        
+        playGameError
     } = usePlayGame();
 
     const handleChangDiamond = (index: number, value: number) => {
@@ -68,17 +68,6 @@ function GameBoard() {
         }
         setOptions(updatedOptions);
     }
-
-
-    // let silverBoard = options[0].map((item:number, index:number)=>{
-
-    //     return <div key={"silver"+index} style={{display: "flex"}}>
-    //         <button onClick={() =>handleChangSilver(index,-1)}>-</button>
-    //         <div>{item}</div>
-    //         <button onClick={() =>handleChangSilver(index,1)}>+</button>
-    //     </div>
-    // })
-
 
     let silverBoard = options[0].map((item:number, index:number)=>{
 
@@ -108,9 +97,9 @@ function GameBoard() {
     })
 
     
-    
+    const [user, setUser] = useState<User>();
 
-    let totalSilverAmount, totalGoldAmount, totalDiamondAmount, totalAmount, userdetails;
+    let totalSilverAmount, totalGoldAmount, totalDiamondAmount, totalAmount;
     if(getGameDetailsResponse!=null && getGameDetailsResponse.game!=null){
 
         totalSilverAmount = (options[0].reduce((accumulator, currentValue) => accumulator + currentValue, 0))*getGameDetailsResponse.game.ticketAmount.silver;
@@ -120,17 +109,27 @@ function GameBoard() {
         totalDiamondAmount = (options[2].reduce((accumulator, currentValue) => accumulator + currentValue, 0))*getGameDetailsResponse.game.ticketAmount.diamond;
 
         totalAmount = totalSilverAmount + totalGoldAmount + totalDiamondAmount;
-
-        
     }
 
-    if(getGameDetailsResponse && getGameDetailsResponse.userDetails && getGameDetailsResponse.userDetails.username){
-        userdetails = {
-            username: getGameDetailsResponse.userDetails.username,
-            balance: getGameDetailsResponse.userDetails.balance,
-            mobile: getGameDetailsResponse.userDetails.mobile
+    useEffect(() => {
+        if(getGameDetailsResponse && getGameDetailsResponse.userDetails && getGameDetailsResponse.userDetails.username){
+            setUser({
+                username: getGameDetailsResponse.userDetails.username,
+                balance: getGameDetailsResponse.userDetails.balance,
+                mobile: getGameDetailsResponse.userDetails.mobile
+            })
         }
-    }
+    }, [getGameDetailsResponse])
+
+    useEffect(()=>{
+        if(playGameError===false && playGameResponse && playGameResponse.userDetails){
+            setUser({
+                username: playGameResponse.userDetails.username,
+                balance: playGameResponse.userDetails.balance,
+                mobile: playGameResponse.userDetails.mobile
+            })
+        }
+    }, [playGameResponse])
 
     const handlePlayGame = () => {
 
@@ -196,14 +195,14 @@ function GameBoard() {
         </div>
 
         
-    let userDetails = userdetails &&
+    let userDetails = (playGameResponse || playGameResponse) &&
         <div className="userDetails" style={{border: "solid 1px", margin: "10px", padding: "10px" }}>
             <div style={{display: "flex"}}>
                 <div>
                     username: 
                 </div>
                 <div>
-                    { userdetails.username}
+                    { user && user.username}
                 </div>
             </div>
             <div style={{display: "flex"}}>
@@ -211,7 +210,7 @@ function GameBoard() {
                     mobile: 
                 </div>
                 <div>
-                    { userdetails.mobile}
+                    { user && user.mobile}
                 </div>
             </div>
             <div style={{display: "flex"}}>
@@ -219,7 +218,7 @@ function GameBoard() {
                     balance: 
                 </div>
                 <div>
-                    { userdetails.balance}
+                    { user && user.balance}
                 </div>
             </div>
             <div>

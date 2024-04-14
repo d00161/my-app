@@ -69,7 +69,7 @@ export interface PlayGameRequest{
 export function usePlayGame() {
 
     const [playGameResponse, setPlayGameResponse] = useState({} as PlayGameResponse);
-    const [errorOccurred, setErrorOccurred] = useState<boolean | null>(null);
+    const [playGameError, setPlayGameError] = useState<boolean | null>(null);
 
     const url = BASE_URL+"playGame";
     const request_config: AxiosRequestConfig = {
@@ -81,7 +81,7 @@ export function usePlayGame() {
     }
     
     const playGame = async (playGamePayload: PlayGameRequest) => {
-        setErrorOccurred(null);
+        setPlayGameError(null);
 
 
         console.log("playing game api")
@@ -89,21 +89,21 @@ export function usePlayGame() {
         axios.post(url, playGamePayload, request_config).then(response => {
             console.log("getgamedetails api")
             setPlayGameResponse(response?.data);
-            setErrorOccurred(false);
+            setPlayGameError(false);
             console.log(response);
 
             console.log("playing game api-1")
         
         }).catch(error=> {
             console.log(error);
-            setErrorOccurred(true);
+            setPlayGameError(true);
         })
     }
 
     return {
         playGameResponse,
         playGame,
-        errorOccurred
+        playGameError
     };
 
 }
